@@ -1,0 +1,9 @@
+server:
+  port: 8000
+spring:
+  application:
+    name: sdk-api
+  profiles:
+    active: dev
+logging:
+  config: classpath:logback-spring.xml

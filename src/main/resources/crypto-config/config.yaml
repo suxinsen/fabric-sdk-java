@@ -1,0 +1,109 @@
+#
+# Copyright SecureKey Technologies Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+#
+# The network connection profile provides client applications the information about the target
+# blockchain network that are necessary for the applications to interact with it. These are all
+# knowledge that must be acquired from out-of-band sources. This file provides such a source.
+#
+
+name: "global-trade-network"
+
+description: "The network that has all the configuration parameters"
+
+x-type: "h1fv1"
+
+#
+# Schema version of the content. Used by the SDK to apply the corresponding parsing rules.
+#
+version: 1.0.0
+
+#
+# The client section used by GO SDK.
+#
+client:
+
+  organization: org1
+
+  credentialStore:
+    path: /tmp
+
+    cryptoStore:
+      path: /tmp/msp
+    wallet: wallet-name
+
+channels:
+  mychannel:
+    orderers:
+      - orderer.example.com
+    peers:
+      peer0.org1.example.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+      peer0.org2.example.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+
+organizations:
+  org1:
+    mspid: Org1MSP
+    peers:
+      - peer0.org1.example.com
+    adminPrivateKey:
+      path: src/main/resources/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/a01ae0b3b5017d26868b3062397c1cd9266dcb1aca794ad271bbb661068b479f_sk
+    signedCert:
+      path: src/main/resources/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem
+#    certificateAuthorities:
+#      - ca.org1.example.com
+
+orderers:
+  orderer.example.com:
+    url: grpc://192.168.1.2:7050
+
+    grpcOptions:
+      grpc-max-send-message-length: 15
+      grpc.keepalive_time_ms: 360000
+      grpc.keepalive_timeout_ms: 180000
+
+    tlsCACerts:
+      path: src/main/resources/crypto-config/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem
+
+peers:
+  peer0.org1.example.com:
+    url: grpc://192.168.1.65:7051
+    grpcOptions:
+      grpc.http2.keepalive_time: 15
+    tlsCACerts:
+      path: src/main/resources/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/server.crt
+
+  peer0.org2.example.com:
+    url: grpc://192.168.1.66:7051
+    tlsCACerts:
+      path: src/main/resources/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/server.crt
+
+#certificateAuthorities:
+#  ca.org1.example.com:
+#    url: http://ca.org1.example.com:7054
+#    tlsCACerts:
+#      # Certificate location absolute path
+#      path: src/main/resources/crypto-config/peerOrganizations/org1.example.com/ca/ca.org1.example.com-cert.pem
+#    registrar:
+#      enrollId: admin
+#      enrollSecret: adminpw
+#    caName: ca.org1.example.com
+#
+#  ca.org2.example.com:
+#    url: http://ca.org2.example.com:7054
+#    tlsCACerts:
+#      # Certificate location absolute path
+#      path: src/main/resources/crypto-config/peerOrganizations/org2.example.com/ca/ca.org2.example.com-cert.pem
+#    registrar:
+#      enrollId: admin
+#      enrollSecret: adminpw
+#    caName: ca.org2.example.com
