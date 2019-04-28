@@ -68,8 +68,8 @@ orderers:
     grpcOptions:
       hostnameOverride: orderer.example.com
       grpc-max-send-message-length: 15
-      grpc.NettyChannelBuilderOption.keepAliveTimeout: 360000
-      grpc.NettyChannelBuilderOption.keepAliveTime: 180000
+      grpc.NettyChannelBuilder.keepAliveTimeout: 360000
+      grpc.NettyChannelBuilder.keepAliveTime: 180000
     tlsCACerts:
       path: src/main/resources/crypto-config/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem
 
